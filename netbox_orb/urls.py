@@ -15,30 +15,30 @@ urlpatterns = (
         'model': models.Agent
     }),
     # Agent Groups
-    path('agent-group/', views.AgentGroupListView.as_view(), name='agent_group_list'),
-    path('agent-group/add/', views.AgentGroupEditView.as_view(), name='agent_group_add'),
-    path('agent-group/<int:pk>/', views.AgentGroupView.as_view(), name='agent_group'),
-    path('agent-group/<int:pk>/edit/', views.AgentGroupEditView.as_view(), name='agent_group_edit'),
-    path('agent-group/<int:pk>/delete/', views.AgentGroupDeleteView.as_view(), name='agent_group_delete'),
-    path('agent-group/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agent_group_changelog',  kwargs={
+    path('agent-group/', views.AgentGroupListView.as_view(), name='agentgroup_list'),
+    path('agent-group/add/', views.AgentGroupEditView.as_view(), name='agentgroup_add'),
+    path('agent-group/<int:pk>/', views.AgentGroupView.as_view(), name='agentgroup'),
+    path('agent-group/<int:pk>/edit/', views.AgentGroupEditView.as_view(), name='agentgroup_edit'),
+    path('agent-group/<int:pk>/delete/', views.AgentGroupDeleteView.as_view(), name='agentgroup_delete'),
+    path('agent-group/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agentgroup_changelog',  kwargs={
         'model': models.AgentGroup
     }),
     # Agent Policies
-    path('agent-policy/', views.AgentPolicyListView.as_view(), name='agent_policy_list'),
-    path('agent-policy/add/', views.AgentPolicyEditView.as_view(), name='agent_policy_add'),
-    path('agent-policy/<int:pk>/', views.AgentPolicyView.as_view(), name='agent_policy'),
-    path('agent-policy/<int:pk>/edit/', views.AgentPolicyEditView.as_view(), name='agent_policy_edit'),
-    path('agent-policy/<int:pk>/delete/', views.AgentPolicyDeleteView.as_view(), name='agent_policy_delete'),
-    path('agent-policy/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agent_policy_changelog',  kwargs={
+    path('agent-policy/', views.AgentPolicyListView.as_view(), name='agentpolicy_list'),
+    path('agent-policy/add/', views.AgentPolicyEditView.as_view(), name='agentpolicy_add'),
+    path('agent-policy/<int:pk>/', views.AgentPolicyView.as_view(), name='agentpolicy'),
+    path('agent-policy/<int:pk>/edit/', views.AgentPolicyEditView.as_view(), name='agentpolicy_edit'),
+    path('agent-policy/<int:pk>/delete/', views.AgentPolicyDeleteView.as_view(), name='agentpolicy_delete'),
+    path('agent-policy/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agentpolicy_changelog',  kwargs={
         'model': models.AgentPolicy
     }),
     # Policy Cloud Probers
-    path('policy-cloud-prober/', views.PolicyCloudProberListView.as_view(), name='policy_cloud_prober_list'),
-    path('policy-cloud-prober/add/', views.PolicyCloudProberEditView.as_view(), name='policy_cloud_prober_add'),
-    path('policy-cloud-prober/<int:pk>/', views.PolicyCloudProberView.as_view(), name='policy_cloud_prober'),
-    path('policy-cloud-prober/<int:pk>/edit/', views.PolicyCloudProberEditView.as_view(), name='policy_cloud_prober_edit'),
-    path('policy-cloud-prober/<int:pk>/delete/', views.PolicyCloudProberDeleteView.as_view(), name='policy_cloud_prober_delete'),
-    path('policy-cloud-prober/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='policy_cloud_prober_changelog',  kwargs={
+    path('policy-cloud-prober/', views.PolicyCloudProberListView.as_view(), name='policycloudprober_list'),
+    path('policy-cloud-prober/add/', views.PolicyCloudProberEditView.as_view(), name='policycloudprober_add'),
+    path('policy-cloud-prober/<int:pk>/', views.PolicyCloudProberView.as_view(), name='policycloudprober'),
+    path('policy-cloud-prober/<int:pk>/edit/', views.PolicyCloudProberEditView.as_view(), name='policycloudprober_edit'),
+    path('policy-cloud-prober/<int:pk>/delete/', views.PolicyCloudProberDeleteView.as_view(), name='policycloudprober_delete'),
+    path('policy-cloud-prober/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='policycloudprober_changelog',  kwargs={
         'model': models.PolicyCloudProber
     }),
     # Sinks

@@ -80,7 +80,7 @@ class AgentGroup(NetBoxModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_orb:agent_group', args=[self.pk])
+        return reverse('plugins:netbox_orb:agentgroup', args=[self.pk])
 
 class AgentPolicy(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -102,7 +102,7 @@ class AgentPolicy(NetBoxModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_orb:agent_policy', args=[self.pk])
+        return reverse('plugins:netbox_orb:agentpolicy', args=[self.pk])
 
 class TypeChoices(ChoiceSet):
     CHOICES = [
@@ -148,7 +148,7 @@ class PolicyCloudProber(NetBoxModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_orb:policy_cloud_prober', args=[self.pk])
+        return reverse('plugins:netbox_orb:policycloudprober', args=[self.pk])
 
 class Sink(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)

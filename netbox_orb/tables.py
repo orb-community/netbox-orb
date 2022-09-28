@@ -38,14 +38,13 @@ class AgentPolicyTable(NetBoxTable):
         default_columns = ("name", "orb_id", "extra_tags", "description")
 
 class PolicyCloudProberTable(NetBoxTable):
-
     name = tables.Column(
         linkify=True
     )
     class Meta(NetBoxTable.Meta):
         model = PolicyCloudProber
-        fields = ("name", "agent_policy_id", "type", "interval", "timeout" "hostnames", "device_ids", "vm_ids", "site_ids")
-        default_columns = ("name", "agent_policy_id", "type", "interval", "timeout" "hostnames", "device_ids", "vm_ids", "site_ids")
+        fields = ("name", "agent_policy_id", "type", "interval", "timeout", "hostnames", "device_ids", "vm_ids", "site_ids")
+        default_columns = ("name", "agent_policy_id", "type", "interval", "timeout", "hostnames", "device_ids", "vm_ids", "site_ids")
 
 class SinkTable(NetBoxTable):
     name = tables.Column(

@@ -5,7 +5,7 @@ from ..models import Agent, AgentGroup, AgentPolicy, Sink, Dataset, PolicyCloudP
 
 class AgentSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_orb-api:agent-detail'
+        view_name='plugins:netbox_orb:agent'
     )
     class Meta:
         model = Agent
@@ -13,7 +13,7 @@ class AgentSerializer(NetBoxModelSerializer):
 
 class AgentGroupSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_orb-api:agent-group-detail'
+        view_name='plugins:netbox_orb:agentgroup'
     )
     class Meta:
         model = AgentGroup
@@ -21,7 +21,7 @@ class AgentGroupSerializer(NetBoxModelSerializer):
 
 class AgentPolicySerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_orb-api:agent-policy-detail'
+        view_name='plugins:netbox_orb:agentpolicy'
     )
     class Meta:
         model = AgentPolicy
@@ -29,15 +29,15 @@ class AgentPolicySerializer(NetBoxModelSerializer):
 
 class PolicyCloudProberSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_orb-api:policy-cloud-prober-detail'
+        view_name='plugins:netbox_orb:policycloudprober'
     )
     class Meta:
         model = PolicyCloudProber
-        fields = ("id", "url", "name", "agent_policy_id", "type", "interval", "timeout" "hostnames", "device_ids", "vm_ids", "site_ids")
+        fields = ("id", "url", "name", "agent_policy_id", "type", "interval", "timeout", "hostnames", "device_ids", "vm_ids", "site_ids")
 
 class SinkSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_orb-api:sink-detail'
+        view_name='plugins:netbox_orb:sink'
     )
     class Meta:
         model = Sink
@@ -45,7 +45,7 @@ class SinkSerializer(NetBoxModelSerializer):
 
 class DatasetSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins-api:netbox_orb-api:dataset-detail'
+        view_name='plugins:netbox_orb:dataset'
     )
     class Meta:
         model = Dataset
