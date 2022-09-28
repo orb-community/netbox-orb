@@ -1,0 +1,60 @@
+{% extends 'generic/object.html' %}
+
+{% block content %}
+  <div class="row mb-3">
+    <div class="col col-md-12">
+      <div class="card">
+        <h5 class="card-header">Policy Cloud Prober</h5>
+        <div class="card-body">
+          <table class="table table-hover attr-table">
+            <tr>
+              <th scope="row">Name</th>
+              <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Agent Policy ID</th>
+              <td>{{ object.agent_policy_id }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Extra Tags</th>
+              <td>{{ object.extra_tags }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Type</th>
+              <td>{{ object.type }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Interval</th>
+              <td>{{ object.interval }} ms</td>
+            </tr>
+            <tr>
+              <th scope="row">Timeout</th>
+              <td>{{ object.timeout }} ms</td>
+            </tr>
+            <tr>
+              <th scope="row">Hostnames</th>
+              <td>{{ object.hostnames }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Devices</th>
+              <td>{{ object.device_ids }}</td>
+            </tr>
+            <tr>
+              <th scope="row">VMs</th>
+              <td>{{ object.vm_ids }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Sites</th>
+              <td>{{ object.site_ids }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      {% include 'inc/panels/custom_fields.html' %}
+    </div>
+    <div class="col col-md-12">
+      <!-- {% include 'inc/panels/tags.html' %} -->
+      <!-- {% include 'inc/panels/comments.html' %} -->
+    </div>
+  </div>
+{% endblock content %}

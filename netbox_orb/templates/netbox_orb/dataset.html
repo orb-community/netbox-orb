@@ -4,7 +4,7 @@
   <div class="row mb-3">
     <div class="col col-md-12">
       <div class="card">
-        <h5 class="card-header">Agent</h5>
+        <h5 class="card-header">Dataset</h5>
         <div class="card-body">
           <table class="table table-hover attr-table">
             <tr>
@@ -16,16 +16,16 @@
               <td>{{ object.orb_id }}</td>
             </tr>
             <tr>
-              <th scope="row">Extra Tags</th>
-              <td>{{ object.extra_tags }}</td>
+              <th scope="row">Agent Policy</th>
+              <td>{{ object.agent_policy_id }}</td>
             </tr>
             <tr>
-              <th scope="row">Device</th>
-              <td>{{ object.device }}</td>
+              <th scope="row">Agent Group</th>
+              <td>{{ object.agent_group_id }}</td>
             </tr>
             <tr>
-              <th scope="row">VM</th>
-              <td>{{ object.vm }}</td>
+              <th scope="row">Sinks</th>
+              <td>{{ object.sink_ids }}</td>
             </tr>
           </table>
         </div>

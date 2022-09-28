@@ -3,27 +3,32 @@ from netbox.forms import NetBoxModelForm
 from .models import Agent, AgentGroup, AgentPolicy, Sink, Dataset, PolicyCloudProber
 from utilities.forms.fields import CommentField
 
-
 class AgentForm(NetBoxModelForm):
     class Meta:
         model = Agent
         fields = ("name", "orb_id", "extra_tags", "device", "vm")
 
+class AgentGroupForm(NetBoxModelForm):
+    class Meta:
+        model = AgentGroup
+        fields = ("name", "orb_id", "extra_tags", "description", "device", "vm", "site" )
 
-# class AccessListRuleForm(NetBoxModelForm):
-#     access_list = DynamicModelChoiceField(
-#         queryset=AccessList.objects.all()
-#     )
-#     source_prefix = DynamicModelChoiceField(
-#         queryset=Prefix.objects.all()
-#     )
-#     destination_prefix = DynamicModelChoiceField(
-#         queryset=Prefix.objects.all()
-#     )
+class AgentPolicyForm(NetBoxModelForm):
+    class Meta:
+        model = AgentPolicy
+        fields = ("name", "orb_id", "extra_tags", "description")
 
-#     class Meta:
-#         model = AccessListRule
-#         fields = (
-#             'access_list', 'index', 'description', 'source_prefix', 'source_ports', 'destination_prefix',
-#             'destination_ports', 'protocol', 'action', 'tags',
-#         )
+class PolicyCloudProberForm(NetBoxModelForm):
+    class Meta:
+        model = PolicyCloudProber
+        fields = ("name", "agent_policy_id", "type", "interval", "timeout", "hostnames", "device_ids", "vm_ids", "site_ids")
+
+class SinkForm(NetBoxModelForm):
+    class Meta:
+        model = Sink
+        fields = ("name", "orb_id" )
+
+class DatasetForm(NetBoxModelForm):
+    class Meta:
+        model = Dataset
+        fields = ("name", "orb_id" , "agent_group_id", "agent_policy_id", "sink_ids" )
