@@ -5,12 +5,13 @@ from netbox.models import NetBoxModel
 from utilities.choices import ChoiceSet
 
 class Agent(NetBoxModel):
-    name = models.TextField()
+    name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
     )
     extra_tags = ArrayField(
         base_field=models.TextField(),
+        blank=True,
         null=True,
     )
     device = models.ForeignKey(
@@ -38,7 +39,7 @@ class Agent(NetBoxModel):
         return reverse('plugins:netbox_orb:agent', args=[self.pk])
 
 class AgentGroup(NetBoxModel):
-    name = models.TextField()
+    name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
     )
@@ -82,7 +83,7 @@ class AgentGroup(NetBoxModel):
         return reverse('plugins:netbox_orb:agent_group', args=[self.pk])
 
 class AgentPolicy(NetBoxModel):
-    name = models.TextField()
+    name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
     )
@@ -110,7 +111,7 @@ class TypeChoices(ChoiceSet):
     ]
     
 class PolicyCloudProber(NetBoxModel):
-    name = models.TextField()
+    name = models.CharField(max_length=128, unique=True)
     agent_policy_id = models.ForeignKey(
         AgentPolicy,
         on_delete=models.SET_NULL,
@@ -150,7 +151,7 @@ class PolicyCloudProber(NetBoxModel):
         return reverse('plugins:netbox_orb:policy_cloud_prober', args=[self.pk])
 
 class Sink(NetBoxModel):
-    name = models.TextField()
+    name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
     )
@@ -165,7 +166,7 @@ class Sink(NetBoxModel):
         return reverse('plugins:netbox_orb:sink', args=[self.pk])
 
 class Dataset(NetBoxModel):
-    name = models.TextField()
+    name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
     )

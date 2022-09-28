@@ -1,0 +1,40 @@
+{% extends 'generic/object.html' %}
+
+{% block content %}
+  <div class="row mb-3">
+    <div class="col col-md-12">
+      <div class="card">
+        <h5 class="card-header">Access List</h5>
+        <div class="card-body">
+          <table class="table table-hover attr-table">
+            <tr>
+              <th scope="row">Name</th>
+              <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Orb ID</th>
+              <td>{{ object.orb_id }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Extra Tags</th>
+              <td>{{ object.extra_tags }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Device</th>
+              <td>{{ object.device }}</td>
+            </tr>
+            <tr>
+              <th scope="row">VM</th>
+              <td>{{ object.vm }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      {% include 'inc/panels/custom_fields.html' %}
+    </div>
+    <div class="col col-md-12">
+      <!-- {% include 'inc/panels/tags.html' %} -->
+      <!-- {% include 'inc/panels/comments.html' %} -->
+    </div>
+  </div>
+{% endblock content %}

@@ -1,4 +1,3 @@
-from pickle import DEFAULT_PROTOCOL
 import django_tables2 as tables
 
 from netbox.tables import NetBoxTable, ChoiceFieldColumn
@@ -6,9 +5,15 @@ from .models import Agent, AgentGroup, AgentPolicy, Sink, Dataset, PolicyCloudPr
 
 
 class AgentTable(NetBoxTable):
-    # name = tables.Column(
-    #     linkify=True
-    # )
+    name = tables.Column(
+        linkify=True
+    )
+    device = tables.Column(
+        linkify=True
+    )
+    vm = tables.Column(
+        linkify=True
+    )
     class Meta(NetBoxTable.Meta):
         model = Agent
         fields = ("name", "orb_id", "extra_tags", "device", "vm")

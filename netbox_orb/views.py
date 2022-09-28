@@ -5,6 +5,7 @@ from . import forms, models, tables
 
 class AgentView(generic.ObjectView):  ## Detail View
     queryset = models.Agent.objects.all()
+    template_name = 'netbox_orb/agent.html'
 
 class AgentListView(generic.ObjectListView):  ## List View
     queryset = models.Agent.objects.all()

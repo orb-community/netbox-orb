@@ -11,5 +11,8 @@ urlpatterns = (
     path('agents/<int:pk>/', views.AgentView.as_view(), name='agent'),
     path('agents/<int:pk>/edit/', views.AgentEditView.as_view(), name='agent_edit'),
     path('agents/<int:pk>/delete/', views.AgentDeleteView.as_view(), name='agent_delete'),
+    path('agents/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agent_changelog',  kwargs={
+        'model': models.Agent
+    }),
 
 )
