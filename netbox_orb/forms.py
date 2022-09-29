@@ -26,4 +26,4 @@ class SinkForm(NetBoxModelForm):
 class DatasetForm(NetBoxModelForm):
     class Meta:
         model = Dataset
-        fields = ("name", "orb_id" , "agent_group_id", "sinks" )
+        fields = ("name", "orb_id" , "agent_group", "policy_cloud_prober", "sink" )

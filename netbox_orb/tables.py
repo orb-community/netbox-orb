@@ -54,5 +54,6 @@ class DatasetTable(NetBoxTable):
     )
     class Meta(NetBoxTable.Meta):
         model = Dataset
-        fields = ("name", "orb_id" , "agent_group_id", "sinks")
-        default_columns = ("name", "orb_id" , "agent_group_id", "sinks" )
+        fields = ("name", "orb_id" , "agent_group", "policy_cloud_prober", "sink")
+        default_columns = ("name", "orb_id" , "agent_group", "policy_cloud_prober", "sink" )
+

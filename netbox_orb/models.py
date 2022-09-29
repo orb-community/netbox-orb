@@ -4,7 +4,10 @@ from django.urls import reverse
 from netbox.models import NetBoxModel
 from utilities.choices import ChoiceSet
 
-from .utils import update_orb_agent, upsert_agent_group, delete_agent_group, upsert_policy_cloud_prober, delete_policy_cloud_prober
+from .utils import delete_dataset, update_orb_agent, \
+    upsert_agent_group, delete_agent_group, upsert_dataset, \
+    upsert_policy_cloud_prober, delete_policy_cloud_prober, \
+    upsert_dataset, delete_dataset
 
 class Agent(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -202,18 +205,20 @@ class Dataset(NetBoxModel):
         null=True,
         blank=True,
     )
-    agent_group_id = models.ForeignKey(
+    agent_group = models.ForeignKey(
         AgentGroup,
-        on_delete=models.SET_NULL,
-        null=True,
+        on_delete=models.CASCADE,
     )
-    policy_cloud_prober_id = models.ForeignKey(
+    policy_cloud_prober = models.ForeignKey(
         PolicyCloudProber,
+        on_delete=models.CASCADE,
+    )
+    sink = models.ForeignKey(
+        Sink,
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
     )
-    sinks = models.ManyToManyField(Sink)
 
     class Meta:
         ordering = ('name',)
@@ -223,3 +228,13 @@ class Dataset(NetBoxModel):
 
     def get_absolute_url(self):
         return reverse('plugins:netbox_orb:dataset', args=[self.pk])
+    
+    def save(self, *args, **kwargs):
+        response_json = upsert_dataset(self)
+        if response_json and response_json["id"]:
+            self.orb_id = response_json["id"]
+        super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        delete_dataset(self)

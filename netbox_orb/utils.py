@@ -116,10 +116,10 @@ def upsert_policy_cloud_prober(model):
     targets_host_names = []
     for hostname in model.hostnames:
         targets_host_names.append(hostname)
-    if model.devices:
-        targets_host_names.append(model.devices.primary_ip4)
-    if model.vms: 
-        targets_host_names.append(model.vms.primary_ip4)
+    if model.devices and model.devices.primary_ip4 :
+        targets_host_names.append(model.devices.primary_ip4.address.split('/')[0])
+    if model.vms and model.vms.primary_ip4: 
+        targets_host_names.append(model.vms.primary_ip4.address.split('/')[0])
         
     payload = {
         "name": model.name,
@@ -148,7 +148,6 @@ def upsert_policy_cloud_prober(model):
         payload["tags"][key] = value
 
     if model.orb_id:
-        print('create_policy_cloud_prober')
         url = "https://{host}/api/v1/policies/agent/{orb_id}".format(
             host=HOST, orb_id=model.orb_id
         )
@@ -158,19 +157,62 @@ def upsert_policy_cloud_prober(model):
             data=json.dumps(payload),
         )
     else:
-        print('insert_policy_cloud_prober')
         url = "https://{host}/api/v1/policies/agent".format(host=HOST)
         r = requests.post(
             url,
             headers=HEADERS,
             data=json.dumps(payload),
         )
-
+    print(r.text)
+    print(payload)
     if r.status_code // 100 == 2:
         return r.json()
 
 
 def delete_policy_cloud_prober(model):
+    url = "https://{host}/api/v1/policies/agent/{orb_id}".format(
+        host=HOST, orb_id=model.orb_id
+    )
+    r = requests.delete(
+        url,
+        headers=HEADERS,
+    )
+
+def upsert_dataset(model):
+    payload = {
+        "name": model.name,
+        "agent_group_id": str(model.agent_group.orb_id),
+        "agent_policy_id": str(model.policy_cloud_prober.orb_id),
+        "sink_ids": [str(model.sink.orb_id)],
+    }
+
+    if model.orb_id:
+        payload = {
+            "name": model.name,
+            "sink_ids": [str(model.sink.orb_id)],
+        }
+        url = "https://{host}/api/v1/policies/dataset/{id}".format(
+            host=HOST, id=model.orb_id
+        )
+        r = requests.put(
+            url,
+            headers=HEADERS,
+            data=json.dumps(payload),
+        )
+    else:
+        url = "https://{host}/api/v1/policies/dataset".format(host=HOST)
+        r = requests.post(
+            url,
+            headers=HEADERS,
+            data=json.dumps(payload),
+        )
+    print(r.text)
+    print(payload)
+    if r.status_code // 100 == 2:
+        return r.json()
+
+
+def delete_dataset(model):
     url = "https://{host}/api/v1/policies/agent/{orb_id}".format(
         host=HOST, orb_id=model.orb_id
     )

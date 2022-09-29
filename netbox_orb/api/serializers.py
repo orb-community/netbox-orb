@@ -42,4 +42,4 @@ class DatasetSerializer(NetBoxModelSerializer):
     )
     class Meta:
         model = Dataset
-        fields = ("id", "url", "name", "orb_id" , "agent_group_id", "sinks" )
+        fields = ("id", "url", "name", "orb_id" , "agent_group", "policy_cloud_prober", "sink" )
