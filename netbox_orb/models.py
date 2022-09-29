@@ -4,7 +4,7 @@ from django.urls import reverse
 from netbox.models import NetBoxModel
 from utilities.choices import ChoiceSet
 
-from .utils import update_orb_agent, upsert_agent_group, delete_agent_group
+from .utils import update_orb_agent, upsert_agent_group, delete_agent_group, upsert_policy_cloud_prober, delete_policy_cloud_prober
 
 class Agent(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -104,7 +104,13 @@ class AgentGroup(NetBoxModel):
         super().delete(*args, **kwargs)
         delete_agent_group(self)
 
-class AgentPolicy(NetBoxModel):
+class TypeChoices(ChoiceSet):
+    CHOICES = [
+        ('http', 'HTTP', 'blue'),
+        ('ping', 'PING', 'orange'),
+    ]
+    
+class PolicyCloudProber(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
@@ -120,29 +126,7 @@ class AgentPolicy(NetBoxModel):
         blank=True,
         help_text='Comma-separated list of key:value pairs. ex. "foo:bar,hello:world"',
     )
-
-    class Meta:
-        ordering = ('name',)
-        
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse('plugins:netbox_orb:agentpolicy', args=[self.pk])
-
-class TypeChoices(ChoiceSet):
-    CHOICES = [
-        ('http', 'HTTP', 'blue'),
-        ('ping', 'PING', 'orange'),
-    ]
-    
-class PolicyCloudProber(NetBoxModel):
-    name = models.CharField(max_length=128, unique=True)
-    agent_policy_id = models.ForeignKey(
-        AgentPolicy,
-        on_delete=models.SET_NULL,
-        null=True,
-    )
+    policy_name = models.CharField(max_length=128, unique=True)
     type =  models.CharField(
         max_length=30,
         choices=TypeChoices
@@ -159,17 +143,23 @@ class PolicyCloudProber(NetBoxModel):
         blank=True,
         help_text='Comma-separated list of hostnames. ex. "www.google.com,www.ns1.com"',
     )
-    device_ids = models.ManyToManyField(
+    devices = models.ForeignKey(
         to='dcim.Device',
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
-    vm_ids = models.ManyToManyField(
+    vms = models.ForeignKey(
         to='virtualization.VirtualMachine',
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
-    site_ids = models.ManyToManyField(
-        to='dcim.Site',
+    services = models.ForeignKey(
+        to='ipam.Service',
         blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     class Meta:
@@ -180,6 +170,16 @@ class PolicyCloudProber(NetBoxModel):
 
     def get_absolute_url(self):
         return reverse('plugins:netbox_orb:policycloudprober', args=[self.pk])
+
+    def save(self, *args, **kwargs):
+        response_json = upsert_policy_cloud_prober(self)
+        if response_json and response_json["id"]:
+            self.orb_id = response_json["id"]
+        super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        delete_policy_cloud_prober(self)
 
 class Sink(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -207,12 +207,13 @@ class Dataset(NetBoxModel):
         on_delete=models.SET_NULL,
         null=True,
     )
-    agent_policy_id = models.ForeignKey(
-        AgentPolicy,
+    policy_cloud_prober_id = models.ForeignKey(
+        PolicyCloudProber,
         on_delete=models.SET_NULL,
+        blank=True,
         null=True,
     )
-    sink_ids = models.ManyToManyField(Sink)
+    sinks = models.ManyToManyField(Sink)
 
     class Meta:
         ordering = ('name',)

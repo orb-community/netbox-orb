@@ -23,15 +23,6 @@ urlpatterns = (
     path('agent-group/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agentgroup_changelog',  kwargs={
         'model': models.AgentGroup
     }),
-    # Agent Policies
-    path('agent-policy/', views.AgentPolicyListView.as_view(), name='agentpolicy_list'),
-    path('agent-policy/add/', views.AgentPolicyEditView.as_view(), name='agentpolicy_add'),
-    path('agent-policy/<int:pk>/', views.AgentPolicyView.as_view(), name='agentpolicy'),
-    path('agent-policy/<int:pk>/edit/', views.AgentPolicyEditView.as_view(), name='agentpolicy_edit'),
-    path('agent-policy/<int:pk>/delete/', views.AgentPolicyDeleteView.as_view(), name='agentpolicy_delete'),
-    path('agent-policy/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agentpolicy_changelog',  kwargs={
-        'model': models.AgentPolicy
-    }),
     # Policy Cloud Probers
     path('policy-cloud-prober/', views.PolicyCloudProberListView.as_view(), name='policycloudprober_list'),
     path('policy-cloud-prober/add/', views.PolicyCloudProberEditView.as_view(), name='policycloudprober_add'),

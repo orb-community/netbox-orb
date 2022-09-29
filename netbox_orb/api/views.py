@@ -1,7 +1,7 @@
 from netbox.api.viewsets import NetBoxModelViewSet
 
 from .. import models
-from .serializers import AgentSerializer, AgentGroupSerializer, AgentPolicySerializer, PolicyCloudProberSerializer, SinkSerializer, DatasetSerializer
+from .serializers import AgentSerializer, AgentGroupSerializer, PolicyCloudProberSerializer, SinkSerializer, DatasetSerializer
 
 class AgentViewSet(NetBoxModelViewSet):
     queryset = models.Agent.objects.prefetch_related('tags')
@@ -11,9 +11,6 @@ class AgentGroupViewSet(NetBoxModelViewSet):
     queryset = models.AgentGroup.objects.prefetch_related('tags')
     serializer_class = AgentGroupSerializer
 
-class AgentPolicyViewSet(NetBoxModelViewSet):
-    queryset = models.AgentPolicy.objects.prefetch_related('tags')
-    serializer_class = AgentPolicySerializer
 
 class PolicyCloudProberViewSet(NetBoxModelViewSet):
     queryset = models.PolicyCloudProber.objects.prefetch_related('tags')

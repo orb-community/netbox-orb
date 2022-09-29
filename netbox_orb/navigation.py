@@ -23,31 +23,21 @@ menu_items = (
     PluginMenuItem(
         link='plugins:netbox_orb:agent_list',
         link_text='Agents',
-        # buttons=agent_buttons
     ),
     PluginMenuItem(
         link='plugins:netbox_orb:agentgroup_list',
         link_text='Agent Groups',
-        # buttons=agentrule_butons
-    ),
-    PluginMenuItem(
-        link='plugins:netbox_orb:agentpolicy_list',
-        link_text='Agent Policies',
-        # buttons=agentrule_butons
     ),
     PluginMenuItem(
         link='plugins:netbox_orb:policycloudprober_list',
         link_text='Policy Cloud Probers',
-        # buttons=agentrule_butons
     ),
     PluginMenuItem(
         link='plugins:netbox_orb:sink_list',
         link_text='Sinks',
-        # buttons=agentrule_butons
     ),
     PluginMenuItem(
         link='plugins:netbox_orb:dataset_list',
         link_text='Datasets',
-        # buttons=agentrule_butons
     ),
 )

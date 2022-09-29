@@ -1,5 +1,6 @@
 from netbox.forms import NetBoxModelForm
-from .models import Agent, AgentGroup, AgentPolicy, Sink, Dataset, PolicyCloudProber
+from utilities.forms import ExpandableNameField
+from .models import Agent, AgentGroup, Sink, Dataset, PolicyCloudProber
 
 class AgentForm(NetBoxModelForm):
     class Meta:
@@ -11,15 +12,11 @@ class AgentGroupForm(NetBoxModelForm):
         model = AgentGroup
         fields = ("name", "orb_id", "extra_tags", "description", "device", "vm", "site" )
 
-class AgentPolicyForm(NetBoxModelForm):
-    class Meta:
-        model = AgentPolicy
-        fields = ("name", "orb_id", "extra_tags", "description")
 
 class PolicyCloudProberForm(NetBoxModelForm):
     class Meta:
         model = PolicyCloudProber
-        fields = ("name", "agent_policy_id", "type", "interval", "timeout", "hostnames", "device_ids", "vm_ids", "site_ids")
+        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
 
 class SinkForm(NetBoxModelForm):
     class Meta:
@@ -29,4 +26,4 @@ class SinkForm(NetBoxModelForm):
 class DatasetForm(NetBoxModelForm):
     class Meta:
         model = Dataset
-        fields = ("name", "orb_id" , "agent_group_id", "agent_policy_id", "sink_ids" )
+        fields = ("name", "orb_id" , "agent_group_id", "sinks" )

@@ -29,18 +29,6 @@ class AgentGroupDeleteView(generic.ObjectDeleteView):  ## Delete View
     queryset = models.AgentGroup.objects.all()
 
 
-class AgentPolicyView(generic.ObjectView):  ## Detail View
-    queryset = models.AgentPolicy.objects.all()
-    template_name = 'netbox_orb/agent-policy.html'
-class AgentPolicyListView(generic.ObjectListView):  ## List View
-    queryset = models.AgentPolicy.objects.all()
-    table = tables.AgentPolicyTable
-class AgentPolicyEditView(generic.ObjectEditView):  ## Edit View
-    queryset = models.AgentPolicy.objects.all()
-    form = forms.AgentPolicyForm
-class AgentPolicyDeleteView(generic.ObjectDeleteView):  ## Delete View
-    queryset = models.AgentPolicy.objects.all()
-
 
 class PolicyCloudProberView(generic.ObjectView):  ## Detail View
     queryset = models.PolicyCloudProber.objects.all()

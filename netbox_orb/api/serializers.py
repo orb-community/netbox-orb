@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from netbox.api.serializers import NetBoxModelSerializer, WritableNestedSerializer
-from ..models import Agent, AgentGroup, AgentPolicy, Sink, Dataset, PolicyCloudProber
+from ..models import Agent, AgentGroup, Sink, Dataset, PolicyCloudProber
 
 class AgentSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
@@ -19,13 +19,6 @@ class AgentGroupSerializer(NetBoxModelSerializer):
         model = AgentGroup
         fields = ("id", "url", "name", "orb_id", "extra_tags", "description", "device", "vm", "site")
 
-class AgentPolicySerializer(NetBoxModelSerializer):
-    url = serializers.HyperlinkedIdentityField(
-        view_name='plugins:netbox_orb:agentpolicy'
-    )
-    class Meta:
-        model = AgentPolicy
-        fields = ("id", "url", "name", "orb_id", "extra_tags", "description")
 
 class PolicyCloudProberSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
@@ -33,7 +26,7 @@ class PolicyCloudProberSerializer(NetBoxModelSerializer):
     )
     class Meta:
         model = PolicyCloudProber
-        fields = ("id", "url", "name", "agent_policy_id", "type", "interval", "timeout", "hostnames", "device_ids", "vm_ids", "site_ids")
+        fields = ("id", "url", "name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
 
 class SinkSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
@@ -49,4 +42,4 @@ class DatasetSerializer(NetBoxModelSerializer):
     )
     class Meta:
         model = Dataset
-        fields = ("id", "url", "name", "orb_id" , "agent_group_id", "agent_policy_id", "sink_ids" )
+        fields = ("id", "url", "name", "orb_id" , "agent_group_id", "sinks" )
