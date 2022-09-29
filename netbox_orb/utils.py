@@ -117,9 +117,9 @@ def upsert_policy_cloud_prober(model):
     for hostname in model.hostnames:
         targets_host_names.append(hostname)
     if model.devices and model.devices.primary_ip4 :
-        targets_host_names.append(model.devices.primary_ip4.address.split('/')[0])
+        targets_host_names.append(str(model.devices.primary_ip4.address).split('/')[0])
     if model.vms and model.vms.primary_ip4: 
-        targets_host_names.append(model.vms.primary_ip4.address.split('/')[0])
+        targets_host_names.append(str(model.vms.primary_ip4.address).split('/')[0])
         
     payload = {
         "name": model.name,
