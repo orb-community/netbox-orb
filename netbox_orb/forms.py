@@ -1,7 +1,5 @@
-from ipam.models import Prefix
 from netbox.forms import NetBoxModelForm
 from .models import Agent, AgentGroup, AgentPolicy, Sink, Dataset, PolicyCloudProber
-from utilities.forms.fields import CommentField
 
 class AgentForm(NetBoxModelForm):
     class Meta:
