@@ -30,17 +30,17 @@ class AgentGroupDeleteView(generic.ObjectDeleteView):  ## Delete View
 
 
 
-class PolicyCloudProberView(generic.ObjectView):  ## Detail View
-    queryset = models.PolicyCloudProber.objects.all()
-    template_name = 'netbox_orb/policy-cloud-prober.html'
-class PolicyCloudProberListView(generic.ObjectListView):  ## List View
-    queryset = models.PolicyCloudProber.objects.all()
-    table = tables.PolicyCloudProberTable
-class PolicyCloudProberEditView(generic.ObjectEditView):  ## Edit View
-    queryset = models.PolicyCloudProber.objects.all()
-    form = forms.PolicyCloudProberForm
-class PolicyCloudProberDeleteView(generic.ObjectDeleteView):  ## Delete View
-    queryset = models.PolicyCloudProber.objects.all()
+class PolicyNetProbeView(generic.ObjectView):  ## Detail View
+    queryset = models.PolicyNetProbe.objects.all()
+    template_name = 'netbox_orb/policy-net-probe.html'
+class PolicyNetProbeListView(generic.ObjectListView):  ## List View
+    queryset = models.PolicyNetProbe.objects.all()
+    table = tables.PolicyNetProbeTable
+class PolicyNetProbeEditView(generic.ObjectEditView):  ## Edit View
+    queryset = models.PolicyNetProbe.objects.all()
+    form = forms.PolicyNetProbeForm
+class PolicyNetProbeDeleteView(generic.ObjectDeleteView):  ## Delete View
+    queryset = models.PolicyNetProbe.objects.all()
 
 
 class SinkView(generic.ObjectView):  ## Detail View

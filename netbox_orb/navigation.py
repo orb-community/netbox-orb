@@ -29,8 +29,8 @@ menu_items = (
         link_text='Agent Groups',
     ),
     PluginMenuItem(
-        link='plugins:netbox_orb:policycloudprober_list',
-        link_text='Policy Cloud Probers',
+        link='plugins:netbox_orb:policynetprobe_list',
+        link_text='Policy Net Probe',
     ),
     PluginMenuItem(
         link='plugins:netbox_orb:sink_list',

@@ -6,7 +6,7 @@ from utilities.choices import ChoiceSet
 
 from .utils import delete_dataset, update_orb_agent, \
     upsert_agent_group, delete_agent_group, upsert_dataset, \
-    upsert_policy_cloud_prober, delete_policy_cloud_prober, \
+    upsert_policy_net_probe, delete_policy_net_probe, \
     upsert_dataset, delete_dataset
 
 class Agent(NetBoxModel):
@@ -113,7 +113,7 @@ class TypeChoices(ChoiceSet):
         ('ping', 'PING', 'orange'),
     ]
     
-class PolicyCloudProber(NetBoxModel):
+class PolicyNetProbe(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
         null=True,
@@ -172,17 +172,17 @@ class PolicyCloudProber(NetBoxModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('plugins:netbox_orb:policycloudprober', args=[self.pk])
+        return reverse('plugins:netbox_orb:policynetprobe', args=[self.pk])
 
     def save(self, *args, **kwargs):
-        response_json = upsert_policy_cloud_prober(self)
+        response_json = upsert_policy_net_probe(self)
         if response_json and response_json["id"]:
             self.orb_id = response_json["id"]
         super().save(*args, **kwargs)
     
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
-        delete_policy_cloud_prober(self)
+        delete_policy_net_probe(self)
 
 class Sink(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -209,9 +209,10 @@ class Dataset(NetBoxModel):
         AgentGroup,
         on_delete=models.CASCADE,
     )
-    policy_cloud_prober = models.ForeignKey(
-        PolicyCloudProber,
+    policy_net_probe = models.ForeignKey(
+        PolicyNetProbe,
         on_delete=models.CASCADE,
+        null=True,
     )
     sink = models.ForeignKey(
         Sink,

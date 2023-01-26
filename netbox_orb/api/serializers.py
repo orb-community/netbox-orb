@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from netbox.api.serializers import NetBoxModelSerializer, WritableNestedSerializer
-from ..models import Agent, AgentGroup, Sink, Dataset, PolicyCloudProber
+from ..models import Agent, AgentGroup, Sink, Dataset, PolicyNetProbe
 
 class AgentSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
@@ -20,12 +20,12 @@ class AgentGroupSerializer(NetBoxModelSerializer):
         fields = ("id", "url", "name", "orb_id", "extra_tags", "description", "device", "vm", "site")
 
 
-class PolicyCloudProberSerializer(NetBoxModelSerializer):
+class PolicyNetProbeSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='plugins:netbox_orb:policycloudprober'
+        view_name='plugins:netbox_orb:policynetprobe'
     )
     class Meta:
-        model = PolicyCloudProber
+        model = PolicyNetProbe
         fields = ("id", "url", "name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
 
 class SinkSerializer(NetBoxModelSerializer):
@@ -42,4 +42,4 @@ class DatasetSerializer(NetBoxModelSerializer):
     )
     class Meta:
         model = Dataset
-        fields = ("id", "url", "name", "orb_id" , "agent_group", "policy_cloud_prober", "sink" )
+        fields = ("id", "url", "name", "orb_id" , "agent_group", "policy_net_probe", "sink" )

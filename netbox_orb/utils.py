@@ -112,7 +112,7 @@ def delete_agent_group(model):
     )
 
 
-def upsert_policy_cloud_prober(model):
+def upsert_policy_net_probe(model):
     targets_host_names = []
     for hostname in model.hostnames:
         targets_host_names.append(hostname)
@@ -126,7 +126,7 @@ def upsert_policy_cloud_prober(model):
         "tags": {
             "source": "netbox",
         },
-        "backend": "cloudprober",
+        "backend": "netprobe",
         "policy": {
             "probes": [
                 {
@@ -169,7 +169,7 @@ def upsert_policy_cloud_prober(model):
         return r.json()
 
 
-def delete_policy_cloud_prober(model):
+def delete_policy_net_probe(model):
     url = "https://{host}/api/v1/policies/agent/{orb_id}".format(
         host=HOST, orb_id=model.orb_id
     )
@@ -182,7 +182,7 @@ def upsert_dataset(model):
     payload = {
         "name": model.name,
         "agent_group_id": str(model.agent_group.orb_id),
-        "agent_policy_id": str(model.policy_cloud_prober.orb_id),
+        "agent_policy_id": str(model.policy_net_probe.orb_id),
         "sink_ids": [str(model.sink.orb_id)],
     }
 

@@ -1,7 +1,7 @@
 import django_tables2 as tables
 
 from netbox.tables import NetBoxTable, ChoiceFieldColumn
-from .models import Agent, AgentGroup, Sink, Dataset, PolicyCloudProber
+from .models import Agent, AgentGroup, Sink, Dataset, PolicyNetProbe
 
 
 class AgentTable(NetBoxTable):
@@ -29,12 +29,12 @@ class AgentGroupTable(NetBoxTable):
         default_columns = ("name", "orb_id", "extra_tags", "description", "device", "vm", "site")
 
 
-class PolicyCloudProberTable(NetBoxTable):
+class PolicyNetProbeTable(NetBoxTable):
     name = tables.Column(
         linkify=True
     )
     class Meta(NetBoxTable.Meta):
-        model = PolicyCloudProber
+        model = PolicyNetProbe
         fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
         default_columns = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
 
@@ -54,6 +54,6 @@ class DatasetTable(NetBoxTable):
     )
     class Meta(NetBoxTable.Meta):
         model = Dataset
-        fields = ("name", "orb_id" , "agent_group", "policy_cloud_prober", "sink")
-        default_columns = ("name", "orb_id" , "agent_group", "policy_cloud_prober", "sink" )
+        fields = ("name", "orb_id" , "agent_group", "policy_net_probe", "sink")
+        default_columns = ("name", "orb_id" , "agent_group", "policy_net_probe", "sink" )
 
