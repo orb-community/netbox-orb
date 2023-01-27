@@ -109,8 +109,8 @@ class AgentGroup(NetBoxModel):
 
 class TypeChoices(ChoiceSet):
     CHOICES = [
-        ('http', 'HTTP', 'blue'),
         ('ping', 'PING', 'orange'),
+        ('tcp', 'TCP', 'blue'),
     ]
     
 class PolicyNetProbe(NetBoxModel):
@@ -139,6 +139,12 @@ class PolicyNetProbe(NetBoxModel):
     )
     timeout = models.PositiveIntegerField(
         default=3000
+    )
+    num_packets = models.PositiveIntegerField(
+        default=1
+    )
+    interval_packets = models.PositiveIntegerField(
+        default=50
     )
     hostnames = ArrayField(
         base_field=models.TextField(),

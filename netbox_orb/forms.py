@@ -16,7 +16,7 @@ class AgentGroupForm(NetBoxModelForm):
 class PolicyNetProbeForm(NetBoxModelForm):
     class Meta:
         model = PolicyNetProbe
-        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
+        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "num_packets", "interval_packets", "hostnames", "devices", "vms", "services")
 
 class SinkForm(NetBoxModelForm):
     class Meta:

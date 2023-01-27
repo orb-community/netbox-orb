@@ -35,8 +35,8 @@ class PolicyNetProbeTable(NetBoxTable):
     )
     class Meta(NetBoxTable.Meta):
         model = PolicyNetProbe
-        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
-        default_columns = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
+        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "num_packets", "interval_packets", "hostnames", "devices", "vms", "services")
+        default_columns = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "num_packets", "interval_packets", "hostnames", "devices", "vms", "services")
 
 
 class SinkTable(NetBoxTable):

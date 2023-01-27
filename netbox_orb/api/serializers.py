@@ -26,7 +26,7 @@ class PolicyNetProbeSerializer(NetBoxModelSerializer):
     )
     class Meta:
         model = PolicyNetProbe
-        fields = ("id", "url", "name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
+        fields = ("id", "url", "name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "num_packets", "interval_packets", "hostnames", "devices", "vms", "services")
 
 class SinkSerializer(NetBoxModelSerializer):
     url = serializers.HyperlinkedIdentityField(
