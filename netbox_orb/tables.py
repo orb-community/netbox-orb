@@ -1,7 +1,7 @@
 import django_tables2 as tables
 
 from netbox.tables import NetBoxTable, ChoiceFieldColumn
-from .models import Agent, AgentGroup, Sink, Dataset, PolicyNetProbe
+from .models import Agent, AgentGroup, Sink, Dataset, ProbeTarget, PolicyNetProbe
 
 
 class AgentTable(NetBoxTable):
@@ -28,6 +28,14 @@ class AgentGroupTable(NetBoxTable):
         fields = ("name", "orb_id", "extra_tags", "description", "device", "vm", "site" )
         default_columns = ("name", "orb_id", "extra_tags", "description", "device", "vm", "site")
 
+class ProbeTargetTable(NetBoxTable):
+    name = tables.Column(
+        linkify=True
+    )
+    class Meta(NetBoxTable.Meta):
+        model = ProbeTarget
+        fields = ("name", "target", "port_number")
+        default_columns = ("name", "target", "port_number")
 
 class PolicyNetProbeTable(NetBoxTable):
     name = tables.Column(
@@ -35,8 +43,8 @@ class PolicyNetProbeTable(NetBoxTable):
     )
     class Meta(NetBoxTable.Meta):
         model = PolicyNetProbe
-        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "num_packets", "interval_packets", "hostnames", "devices", "vms", "services")
-        default_columns = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "num_packets", "interval_packets", "hostnames", "devices", "vms", "services")
+        fields = ("name", "orb_id", "description", "extra_tags", "tap", "type", "interval", "timeout", "num_packets", "interval_btw_packets", "targets", "devices", "vms", "services")
+        default_columns = ("name", "orb_id", "description", "extra_tags", "tap", "type", "interval", "timeout", "num_packets", "interval_btw_packets", "targets", "devices", "vms", "services")
 
 
 class SinkTable(NetBoxTable):

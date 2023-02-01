@@ -29,6 +29,17 @@ class AgentGroupDeleteView(generic.ObjectDeleteView):  ## Delete View
     queryset = models.AgentGroup.objects.all()
 
 
+class ProbeTargetView(generic.ObjectView):  ## Detail View
+    queryset = models.ProbeTarget.objects.all()
+    template_name = 'netbox_orb/probe-target.html'
+class ProbeTargetListView(generic.ObjectListView):  ## List View
+    queryset = models.ProbeTarget.objects.all()
+    table = tables.ProbeTargetTable
+class ProbeTargetEditView(generic.ObjectEditView):  ## Edit View
+    queryset = models.ProbeTarget.objects.all()
+    form = forms.ProbeTargetForm
+class ProbeTargetDeleteView(generic.ObjectDeleteView):  ## Delete View
+    queryset = models.ProbeTarget.objects.all()
 
 class PolicyNetProbeView(generic.ObjectView):  ## Detail View
     queryset = models.PolicyNetProbe.objects.all()

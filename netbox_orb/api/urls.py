@@ -6,6 +6,7 @@ app_name = 'netbox_orb'
 router = NetBoxRouter()
 router.register('agents', views.AgentViewSet)
 router.register('agent-groups', views.AgentGroupViewSet)
+router.register('probe-target', views.ProbeTargetViewSet)
 router.register('policy-netprobe', views.PolicyNetProbeViewSet)
 router.register('sinks', views.SinkViewSet)
 router.register('datasets', views.DatasetViewSet)

@@ -20,7 +20,19 @@ menu_items = (
         buttons=(
             PluginMenuButton(
                 link='plugins:netbox_orb:agentgroup_add',
-                title='Agents',
+                title='Agent Groups',
+                icon_class='mdi mdi-plus-thick',
+                color=ButtonColorChoices.GREEN,
+            ),
+        ),
+    ),
+        PluginMenuItem(
+        link='plugins:netbox_orb:probetarget_list',
+        link_text='Probe Targets',
+        buttons=(
+            PluginMenuButton(
+                link='plugins:netbox_orb:probetarget_add',
+                title='Probe Targets',
                 icon_class='mdi mdi-plus-thick',
                 color=ButtonColorChoices.GREEN,
             ),
@@ -32,7 +44,7 @@ menu_items = (
         buttons=(
             PluginMenuButton(
                 link='plugins:netbox_orb:policynetprobe_add',
-                title='Agents',
+                title='Policy Net Probe',
                 icon_class='mdi mdi-plus-thick',
                 color=ButtonColorChoices.GREEN,
             ),
@@ -44,7 +56,7 @@ menu_items = (
         buttons=(
             PluginMenuButton(
                 link='plugins:netbox_orb:sink_add',
-                title='Agents',
+                title='Sinks',
                 icon_class='mdi mdi-plus-thick',
                 color=ButtonColorChoices.GREEN,
             ),
@@ -56,7 +68,7 @@ menu_items = (
         buttons=(
             PluginMenuButton(
                 link='plugins:netbox_orb:dataset_add',
-                title='Agents',
+                title='Datasets',
                 icon_class='mdi mdi-plus-thick',
                 color=ButtonColorChoices.GREEN,
             ),

@@ -9,6 +9,7 @@ from .utils import delete_dataset, update_orb_agent, \
     upsert_policy_net_probe, delete_policy_net_probe, \
     upsert_dataset, delete_dataset
 
+
 class Agent(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
@@ -38,17 +39,18 @@ class Agent(NetBoxModel):
 
     class Meta:
         ordering = ('name',)
-        
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('plugins:netbox_orb:agent', args=[self.pk])
-    
+
     def save(self, *args, **kwargs):
         if (self.orb_id):
             update_orb_agent(self)
         super().save(*args, **kwargs)
+
 
 class AgentGroup(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -87,10 +89,10 @@ class AgentGroup(NetBoxModel):
         blank=True,
         null=True,
     )
-    
+
     class Meta:
         ordering = ('name',)
-        
+
     def __str__(self):
         return self.name
 
@@ -102,17 +104,38 @@ class AgentGroup(NetBoxModel):
         if response_json and response_json["id"]:
             self.orb_id = response_json["id"]
         super().save(*args, **kwargs)
-    
+
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
         delete_agent_group(self)
+
 
 class TypeChoices(ChoiceSet):
     CHOICES = [
         ('ping', 'PING', 'orange'),
         ('tcp', 'TCP', 'blue'),
     ]
-    
+
+
+class ProbeTarget(NetBoxModel):
+    name = models.CharField(max_length=128, unique=True)
+    target = models.CharField(max_length=128,
+    help_text='It can be a hostname ex. "example.com" or an ip ex. "192.168.0.1"',)
+    port_number = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('plugins:netbox_orb:probetarget', args=[self.pk])
+
+
 class PolicyNetProbe(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
     orb_id = models.UUIDField(
@@ -129,8 +152,8 @@ class PolicyNetProbe(NetBoxModel):
         blank=True,
         help_text='Comma-separated list of key:value pairs. ex. "foo:bar,hello:world"',
     )
-    policy_name = models.CharField(max_length=128, unique=True)
-    type =  models.CharField(
+    tap = models.CharField(max_length=128)
+    type = models.CharField(
         max_length=30,
         choices=TypeChoices
     )
@@ -143,14 +166,13 @@ class PolicyNetProbe(NetBoxModel):
     num_packets = models.PositiveIntegerField(
         default=1
     )
-    interval_packets = models.PositiveIntegerField(
+    interval_btw_packets = models.PositiveIntegerField(
         default=50
     )
-    hostnames = ArrayField(
-        base_field=models.TextField(),
-        null=True,
+    targets = models.ManyToManyField(
+        ProbeTarget,
         blank=True,
-        help_text='Comma-separated list of hostnames. ex. "www.google.com,www.ns1.com"',
+        related_name='policy_probe_target'
     )
     devices = models.ForeignKey(
         to='dcim.Device',
@@ -173,7 +195,7 @@ class PolicyNetProbe(NetBoxModel):
 
     class Meta:
         ordering = ('name',)
-        
+
     def __str__(self):
         return self.name
 
@@ -185,10 +207,11 @@ class PolicyNetProbe(NetBoxModel):
         if response_json and response_json["id"]:
             self.orb_id = response_json["id"]
         super().save(*args, **kwargs)
-    
+
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
         delete_policy_net_probe(self)
+
 
 class Sink(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -198,12 +221,13 @@ class Sink(NetBoxModel):
 
     class Meta:
         ordering = ('name',)
-        
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('plugins:netbox_orb:sink', args=[self.pk])
+
 
 class Dataset(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)
@@ -229,19 +253,19 @@ class Dataset(NetBoxModel):
 
     class Meta:
         ordering = ('name',)
-        
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('plugins:netbox_orb:dataset', args=[self.pk])
-    
+
     def save(self, *args, **kwargs):
         response_json = upsert_dataset(self)
         if response_json and response_json["id"]:
             self.orb_id = response_json["id"]
         super().save(*args, **kwargs)
-    
+
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
         delete_dataset(self)

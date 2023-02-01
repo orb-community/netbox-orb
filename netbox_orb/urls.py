@@ -23,6 +23,15 @@ urlpatterns = (
     path('agent-group/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agentgroup_changelog',  kwargs={
         'model': models.AgentGroup
     }),
+    # Probe Targets
+    path('probe-target/', views.ProbeTargetListView.as_view(), name='probetarget_list'),
+    path('probe-target/add/', views.ProbeTargetEditView.as_view(), name='probetarget_add'),
+    path('probe-target/<int:pk>/', views.ProbeTargetView.as_view(), name='probetarget'),
+    path('probe-target/<int:pk>/edit/', views.ProbeTargetEditView.as_view(), name='probetarget_edit'),
+    path('probe-target/<int:pk>/delete/', views.ProbeTargetDeleteView.as_view(), name='probetarget_delete'),
+    path('probe-target/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='probetarget_changelog',  kwargs={
+        'model': models.ProbeTarget
+    }),
     # Policy Net Probe
     path('policy-net-probe/', views.PolicyNetProbeListView.as_view(), name='policynetprobe_list'),
     path('policy-net-probe/add/', views.PolicyNetProbeEditView.as_view(), name='policynetprobe_add'),

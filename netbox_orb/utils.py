@@ -145,7 +145,7 @@ def upsert_policy_net_probe(model):
                 "config": {
                     "test_type": model.type,
                     "packets_per_test": model.num_packets,
-                    "packets_interval_msec": model.interval_packets,
+                    "packets_interval_msec": model.interval_btw_packets,
                     "interval_msec": model.interval,
                     "timeout_msec": model.timeout,
                     "targets": {
