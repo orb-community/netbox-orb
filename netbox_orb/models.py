@@ -172,7 +172,8 @@ class PolicyNetProbe(NetBoxModel):
     targets = models.ManyToManyField(
         ProbeTarget,
         blank=True,
-        related_name='policy_probe_target'
+        related_name='policy_probe_target',
+        verbose_name="Targets"
     )
     devices = models.ForeignKey(
         to='dcim.Device',
