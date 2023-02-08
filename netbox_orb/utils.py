@@ -115,15 +115,13 @@ def delete_agent_group(model):
 
 
 def upsert_policy_net_probe(model):
-    targets_host_names = []
-    for hostname in model.hostnames:
-        targets_host_names.append(hostname)
-    if model.devices and model.devices.primary_ip4:
-        targets_host_names.append(
-            str(model.devices.primary_ip4.address).split('/')[0])
-    if model.vms and model.vms.primary_ip4:
-        targets_host_names.append(
-            str(model.vms.primary_ip4.address).split('/')[0])
+    # targets_list = []
+    # if model.devices and model.devices.primary_ip4:
+    #     targets_host_names.append(
+    #         str(model.devices.primary_ip4.address).split('/')[0])
+    # if model.vms and model.vms.primary_ip4:
+    #     targets_host_names.append(
+    #         str(model.vms.primary_ip4.address).split('/')[0])
 
     payload = {
         "name": model.name,
@@ -148,14 +146,17 @@ def upsert_policy_net_probe(model):
                     "packets_interval_msec": model.interval_btw_packets,
                     "interval_msec": model.interval,
                     "timeout_msec": model.timeout,
-                    "targets": {
-
-                    },
                 }
             },
             "kind": "collection",
         },
     }
+    
+    for target in model.targets.all():
+        print(target)
+    #     payload["policy"]["input"]["config"]["targets"][target.name]["target"] = target.target
+    #     if target.port:
+    #         payload["policy"]["input"]["config"]["targets"][target.name]["port"] = target.port
 
     if model.description:
         payload["description"] = model.description

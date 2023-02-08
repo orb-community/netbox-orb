@@ -25,9 +25,13 @@ class AgentGroupSerializer(NetBoxModelSerializer):
         fields = ("id", "url", "display", "name", "orb_id", "extra_tags", "description", "device", "vm", "site")
 
 class ProbeTargetSerializer(NetBoxModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='plugins:netbox_orb:probetarget'
+    )
+
     class Meta:
         model = ProbeTarget
-        fields = '__all__'
+        fields = ("id", "url", "display", "name", "target", "port_number")
 
 class NestedProbeTargetSerializer(WritableNestedSerializer):
     url = serializers.HyperlinkedIdentityField(

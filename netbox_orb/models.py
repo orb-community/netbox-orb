@@ -173,7 +173,7 @@ class PolicyNetProbe(NetBoxModel):
         ProbeTarget,
         blank=True,
         related_name='policy_probe_target',
-        verbose_name="Targets"
+        verbose_name="Targets",
     )
     devices = models.ForeignKey(
         to='dcim.Device',
@@ -204,6 +204,7 @@ class PolicyNetProbe(NetBoxModel):
         return reverse('plugins:netbox_orb:policynetprobe', args=[self.pk])
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         response_json = upsert_policy_net_probe(self)
         if response_json and response_json["id"]:
             self.orb_id = response_json["id"]
