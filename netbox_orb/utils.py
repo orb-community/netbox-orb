@@ -146,6 +146,9 @@ def upsert_policy_net_probe(model):
                     "packets_interval_msec": model.interval_btw_packets,
                     "interval_msec": model.interval,
                     "timeout_msec": model.timeout,
+                    "targets" : {
+
+                    }
                 }
             },
             "kind": "collection",
@@ -153,10 +156,10 @@ def upsert_policy_net_probe(model):
     }
     
     for target in model.targets.all():
-        print(target)
-    #     payload["policy"]["input"]["config"]["targets"][target.name]["target"] = target.target
-    #     if target.port:
-    #         payload["policy"]["input"]["config"]["targets"][target.name]["port"] = target.port
+        payload["policy"]["input"]["config"]["targets"][target.name] = {}
+        payload["policy"]["input"]["config"]["targets"][target.name]["target"] = target.target
+        if target.port_number:
+            payload["policy"]["input"]["config"]["targets"][target.name]["port"] = target.port_number
 
     if model.description:
         payload["description"] = model.description
