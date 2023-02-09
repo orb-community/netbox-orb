@@ -1,29 +1,46 @@
 from netbox.forms import NetBoxModelForm
-from utilities.forms import ExpandableNameField
-from .models import Agent, AgentGroup, Sink, Dataset, PolicyCloudProber
+from utilities.forms import ExpandableNameField, DynamicModelMultipleChoiceField
+from .models import Agent, AgentGroup, Sink, Dataset, ProbeTarget, PolicyNetProbe
+
 
 class AgentForm(NetBoxModelForm):
     class Meta:
         model = Agent
         fields = ("name", "orb_id", "extra_tags", "device", "vm")
 
+
 class AgentGroupForm(NetBoxModelForm):
     class Meta:
         model = AgentGroup
-        fields = ("name", "orb_id", "extra_tags", "description", "device", "vm", "site" )
+        fields = ("name", "orb_id", "extra_tags",
+                  "description", "device", "vm", "site")
 
 
-class PolicyCloudProberForm(NetBoxModelForm):
+class ProbeTargetForm(NetBoxModelForm):
     class Meta:
-        model = PolicyCloudProber
-        fields = ("name", "orb_id", "description", "extra_tags","policy_name", "type", "interval", "timeout", "hostnames", "devices", "vms", "services")
+        model = ProbeTarget
+        fields = ("name", "target", "port_number")
+
+
+class PolicyNetProbeForm(NetBoxModelForm):
+    targets = DynamicModelMultipleChoiceField(
+        label="Targets",
+        queryset=ProbeTarget.objects.all(),
+        required=True,
+    )
+    class Meta:
+        model = PolicyNetProbe
+        fields = ("name", "orb_id", "description", "extra_tags", "tap", "type", "interval",
+                  "timeout", "num_packets", "interval_btw_packets", "targets", "devices", "vms", "services")
+
 
 class SinkForm(NetBoxModelForm):
     class Meta:
         model = Sink
-        fields = ("name", "orb_id" )
+        fields = ("name", "orb_id")
+
 
 class DatasetForm(NetBoxModelForm):
     class Meta:
         model = Dataset
-        fields = ("name", "orb_id" , "agent_group", "policy_cloud_prober", "sink" )
+        fields = ("name", "orb_id", "agent_group", "policy_net_probe", "sink")

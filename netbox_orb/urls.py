@@ -23,14 +23,23 @@ urlpatterns = (
     path('agent-group/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='agentgroup_changelog',  kwargs={
         'model': models.AgentGroup
     }),
-    # Policy Cloud Probers
-    path('policy-cloud-prober/', views.PolicyCloudProberListView.as_view(), name='policycloudprober_list'),
-    path('policy-cloud-prober/add/', views.PolicyCloudProberEditView.as_view(), name='policycloudprober_add'),
-    path('policy-cloud-prober/<int:pk>/', views.PolicyCloudProberView.as_view(), name='policycloudprober'),
-    path('policy-cloud-prober/<int:pk>/edit/', views.PolicyCloudProberEditView.as_view(), name='policycloudprober_edit'),
-    path('policy-cloud-prober/<int:pk>/delete/', views.PolicyCloudProberDeleteView.as_view(), name='policycloudprober_delete'),
-    path('policy-cloud-prober/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='policycloudprober_changelog',  kwargs={
-        'model': models.PolicyCloudProber
+    # Probe Targets
+    path('probe-target/', views.ProbeTargetListView.as_view(), name='probetarget_list'),
+    path('probe-target/add/', views.ProbeTargetEditView.as_view(), name='probetarget_add'),
+    path('probe-target/<int:pk>/', views.ProbeTargetView.as_view(), name='probetarget'),
+    path('probe-target/<int:pk>/edit/', views.ProbeTargetEditView.as_view(), name='probetarget_edit'),
+    path('probe-target/<int:pk>/delete/', views.ProbeTargetDeleteView.as_view(), name='probetarget_delete'),
+    path('probe-target/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='probetarget_changelog',  kwargs={
+        'model': models.ProbeTarget
+    }),
+    # Policy Net Probe
+    path('policy-net-probe/', views.PolicyNetProbeListView.as_view(), name='policynetprobe_list'),
+    path('policy-net-probe/add/', views.PolicyNetProbeEditView.as_view(), name='policynetprobe_add'),
+    path('policy-net-probe/<int:pk>/', views.PolicyNetProbeView.as_view(), name='policynetprobe'),
+    path('policy-net-probe/<int:pk>/edit/', views.PolicyNetProbeEditView.as_view(), name='policynetprobe_edit'),
+    path('policy-net-probe/<int:pk>/delete/', views.PolicyNetProbeDeleteView.as_view(), name='policynetprobe_delete'),
+    path('policy-net-probe/<int:pk>/changelog/', ObjectChangeLogView.as_view(), name='policynetprobe_changelog',  kwargs={
+        'model': models.PolicyNetProbe
     }),
     # Sinks
     path('sink/', views.SinkListView.as_view(), name='sink_list'),

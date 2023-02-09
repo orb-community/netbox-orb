@@ -4,7 +4,7 @@
   <div class="row mb-3">
     <div class="col col-md-12">
       <div class="card">
-        <h5 class="card-header">Policy Cloud Prober</h5>
+        <h5 class="card-header">Policy Net Probe</h5>
         <div class="card-body">
           <table class="table table-hover attr-table">
             <tr>
@@ -24,8 +24,8 @@
               <td>{{ object.Description }}</td>
             </tr>
             <tr>
-              <th scope="row">Policy Name</th>
-              <td>{{ object.policy_name }}</td>
+              <th scope="row">Tap</th>
+              <td>{{ object.tap }}</td>
             </tr>
             <tr>
               <th scope="row">Type</th>
@@ -40,8 +40,16 @@
               <td>{{ object.timeout }} ms</td>
             </tr>
             <tr>
-              <th scope="row">Hostnames</th>
-              <td>{{ object.hostnames }}</td>
+              <th scope="row">Number of Packets</th>
+              <td>{{ object.num_packets }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Interval Between Packets</th>
+              <td>{{ object.interval_btw_packets }} ms</td>
+            </tr>
+            <tr>
+              <th scope="row">Targets</th>
+              <td>{{ object.targets }}</td>
             </tr>
             <tr>
               <th scope="row">Devices</th>

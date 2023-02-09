@@ -18,7 +18,7 @@ class AgentDeleteView(generic.ObjectDeleteView):  ## Delete View
 
 class AgentGroupView(generic.ObjectView):  ## Detail View
     queryset = models.AgentGroup.objects.all()
-    template_name = 'netbox_orb/agent-group.html'
+    template_name = 'netbox_orb/agentgroup.html'
 class AgentGroupListView(generic.ObjectListView):  ## List View
     queryset = models.AgentGroup.objects.all()
     table = tables.AgentGroupTable
@@ -29,18 +29,29 @@ class AgentGroupDeleteView(generic.ObjectDeleteView):  ## Delete View
     queryset = models.AgentGroup.objects.all()
 
 
+class ProbeTargetView(generic.ObjectView):  ## Detail View
+    queryset = models.ProbeTarget.objects.all()
+    template_name = 'netbox_orb/probetarget.html'
+class ProbeTargetListView(generic.ObjectListView):  ## List View
+    queryset = models.ProbeTarget.objects.all()
+    table = tables.ProbeTargetTable
+class ProbeTargetEditView(generic.ObjectEditView):  ## Edit View
+    queryset = models.ProbeTarget.objects.all()
+    form = forms.ProbeTargetForm
+class ProbeTargetDeleteView(generic.ObjectDeleteView):  ## Delete View
+    queryset = models.ProbeTarget.objects.all()
 
-class PolicyCloudProberView(generic.ObjectView):  ## Detail View
-    queryset = models.PolicyCloudProber.objects.all()
-    template_name = 'netbox_orb/policy-cloud-prober.html'
-class PolicyCloudProberListView(generic.ObjectListView):  ## List View
-    queryset = models.PolicyCloudProber.objects.all()
-    table = tables.PolicyCloudProberTable
-class PolicyCloudProberEditView(generic.ObjectEditView):  ## Edit View
-    queryset = models.PolicyCloudProber.objects.all()
-    form = forms.PolicyCloudProberForm
-class PolicyCloudProberDeleteView(generic.ObjectDeleteView):  ## Delete View
-    queryset = models.PolicyCloudProber.objects.all()
+class PolicyNetProbeView(generic.ObjectView):  ## Detail View
+    queryset = models.PolicyNetProbe.objects.all()
+    template_name = 'netbox_orb/policynetprobe.html'
+class PolicyNetProbeListView(generic.ObjectListView):  ## List View
+    queryset = models.PolicyNetProbe.objects.all()
+    table = tables.PolicyNetProbeTable
+class PolicyNetProbeEditView(generic.ObjectEditView):  ## Edit View
+    queryset = models.PolicyNetProbe.objects.all()
+    form = forms.PolicyNetProbeForm
+class PolicyNetProbeDeleteView(generic.ObjectDeleteView):  ## Delete View
+    queryset = models.PolicyNetProbe.objects.all()
 
 
 class SinkView(generic.ObjectView):  ## Detail View

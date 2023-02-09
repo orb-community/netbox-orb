@@ -28,7 +28,8 @@ def update_orb_agent(model):
             payload["orb_tags"]["site_name"] = str(model.device.site.name)
         if model.device.cluster:
             payload["orb_tags"]["cluster_id"] = str(model.device.cluster.id)
-            payload["orb_tags"]["cluster_name"] = str(model.device.cluster.name)
+            payload["orb_tags"]["cluster_name"] = str(
+                model.device.cluster.name)
 
     if model.vm:
         payload["orb_tags"]["vm_id"] = str(model.vm.id)
@@ -47,7 +48,8 @@ def update_orb_agent(model):
         key, value = tag.split(":")
         payload["orb_tags"][key] = value
 
-    url = "https://{host}/api/v1/agents/{orb_id}".format(host=HOST, orb_id=model.orb_id)
+    url = "https://{host}/api/v1/agents/{orb_id}".format(
+        host=HOST, orb_id=model.orb_id)
 
     print(payload)
     r = requests.put(
@@ -112,33 +114,54 @@ def delete_agent_group(model):
     )
 
 
-def upsert_policy_cloud_prober(model):
-    targets_host_names = []
-    for hostname in model.hostnames:
-        targets_host_names.append(hostname)
-    if model.devices and model.devices.primary_ip4 :
-        targets_host_names.append(str(model.devices.primary_ip4.address).split('/')[0])
-    if model.vms and model.vms.primary_ip4: 
-        targets_host_names.append(str(model.vms.primary_ip4.address).split('/')[0])
-        
+def upsert_policy_net_probe(model):
+    if not model.targets.all():
+        return
+    # targets_list = []
+    # if model.devices and model.devices.primary_ip4:
+    #     targets_host_names.append(
+    #         str(model.devices.primary_ip4.address).split('/')[0])
+    # if model.vms and model.vms.primary_ip4:
+    #     targets_host_names.append(
+    #         str(model.vms.primary_ip4.address).split('/')[0])
+
     payload = {
         "name": model.name,
         "tags": {
             "source": "netbox",
         },
-        "backend": "cloudprober",
+        "backend": "pktvisor",
         "policy": {
-            "probes": [
-                {
-                    "name": model.policy_name,
-                    "type": model.type,
+            "handlers": {
+                "modules": {
+                    "default_netprobe": {
+                        "type": "netprobe",
+                    },
+                },
+            },
+            "input": {
+                "input_type": "netprobe",
+                "tap": model.tap,
+                "config": {
+                    "test_type": model.type,
+                    "packets_per_test": model.num_packets,
+                    "packets_interval_msec": model.interval_btw_packets,
                     "interval_msec": model.interval,
                     "timeout_msec": model.timeout,
-                    "targets_host_names": ','.join(targets_host_names),
+                    "targets" : {
+
+                    }
                 }
-            ]
+            },
+            "kind": "collection",
         },
     }
+
+    for target in model.targets.all():
+        payload["policy"]["input"]["config"]["targets"][target.name] = {}
+        payload["policy"]["input"]["config"]["targets"][target.name]["target"] = target.target
+        if target.port_number:
+            payload["policy"]["input"]["config"]["targets"][target.name]["port"] = target.port_number
 
     if model.description:
         payload["description"] = model.description
@@ -169,7 +192,7 @@ def upsert_policy_cloud_prober(model):
         return r.json()
 
 
-def delete_policy_cloud_prober(model):
+def delete_policy_net_probe(model):
     url = "https://{host}/api/v1/policies/agent/{orb_id}".format(
         host=HOST, orb_id=model.orb_id
     )
@@ -178,11 +201,12 @@ def delete_policy_cloud_prober(model):
         headers=HEADERS,
     )
 
+
 def upsert_dataset(model):
     payload = {
         "name": model.name,
         "agent_group_id": str(model.agent_group.orb_id),
-        "agent_policy_id": str(model.policy_cloud_prober.orb_id),
+        "agent_policy_id": str(model.policy_net_probe.orb_id),
         "sink_ids": [str(model.sink.orb_id)],
     }
 
