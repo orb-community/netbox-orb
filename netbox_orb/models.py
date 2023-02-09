@@ -172,7 +172,7 @@ class PolicyNetProbe(NetBoxModel):
     targets = models.ManyToManyField(
         ProbeTarget,
         blank=True,
-        related_name='policy_probe_target',
+        related_name='+',
         verbose_name="Targets",
     )
     devices = models.ForeignKey(
@@ -204,7 +204,10 @@ class PolicyNetProbe(NetBoxModel):
         return reverse('plugins:netbox_orb:policynetprobe', args=[self.pk])
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+        try:
+            self.targets
+        except:
+            super().save(*args, **kwargs)
         response_json = upsert_policy_net_probe(self)
         if response_json and response_json["id"]:
             self.orb_id = response_json["id"]
@@ -213,7 +216,6 @@ class PolicyNetProbe(NetBoxModel):
     def delete(self, *args, **kwargs):
         super().delete(*args, **kwargs)
         delete_policy_net_probe(self)
-
 
 class Sink(NetBoxModel):
     name = models.CharField(max_length=128, unique=True)

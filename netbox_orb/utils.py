@@ -115,6 +115,8 @@ def delete_agent_group(model):
 
 
 def upsert_policy_net_probe(model):
+    if not model.targets.all():
+        return
     # targets_list = []
     # if model.devices and model.devices.primary_ip4:
     #     targets_host_names.append(
@@ -154,7 +156,7 @@ def upsert_policy_net_probe(model):
             "kind": "collection",
         },
     }
-    
+
     for target in model.targets.all():
         payload["policy"]["input"]["config"]["targets"][target.name] = {}
         payload["policy"]["input"]["config"]["targets"][target.name]["target"] = target.target

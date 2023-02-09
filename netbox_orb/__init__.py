@@ -7,4 +7,8 @@ class NetBoxOrbConfig(PluginConfig):
     version = '0.1'
     base_url = 'orb'
 
+    def ready(self):
+        from . import signals
+        super().ready()
+
 config = NetBoxOrbConfig
